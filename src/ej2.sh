@@ -1,31 +1,36 @@
-# Script que a partir de un directorio que recibe como argumento añada permisos de ejecución de forma recursiva a todos los archivos de extensión .sh. Si no recibe argumento, lo hará a partir del directorio actual.
+#!/bin/bash
 
-# ./ej2.sh dir (1)
-# ./ej2.sh	(0)
+########################################################################
+# Dado directorio
+# añadir permisos de ejecución a todos sus .sh
+# Si no se da directorio, hacerlo sobre el dir actual
+#
+# 		$./ej2.sh [directorio]
+########################################################################
+
+if test $# -eq 0
+then
+	dir=.
+fi
+
+if test $# -eq 1
+then
+	if ! test -d $1
+	then
+		echo "Error. $1 no existe o no es directorio"
+	exit 1
+	else
+		dir=$1
+	fi
+fi
 
 if test $# -gt 1
 then
-	echo "Error. Uso: $0 [directorio]"
+	echo "Error. Uso $0 [directorio]"
 	exit 1
-
-
-elif test $# -eq 1
-then
-	#comprobamos si es un directorio
-	if test -d $1
-	then
-		directorio=$1
-	else
-		echo "$1 no existe o no es un directorio"
-		exit 2
-	fi
-else
-	directorio=.
 fi
 
-for FILE in $(find $directorio *.sh)
+for FILE in $(find $dir -name "*.sh")
 do
 	chmod u+x $FILE
 done
-
-

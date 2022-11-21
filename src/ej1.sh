@@ -1,18 +1,23 @@
-# Script que busque cuales de los ficheros del directorio /bin no  tienen pagina de manual en la seccion 1(/usr/share/man/man1/nombre.1.gz) sindo nombre el nombre del comando. Por ej para ls /usr/share/man/man1/ls.1.gz
-
-# ./ej1.sh
+#!/bin/bash
+########################################################################
+# Imprimir ficheros de
+# /bin que no tienen ficheros en pag de manual 1
+# el formato de fichero en manual 1: /usr/share/man/man1/nombre.1.gz
+#
+# 		$./ej1.sh
+########################################################################
 
 if test $# -ne 0
 then
-	echo "Error. Uso:$0"
+	echo "Error. Uso: $0"
 	exit 1
 fi
-
-for comando in $(ls /bin)
+ 
+for FILE in $(ls /bin)
 do
-	if ! test -e "/usr/share/man/man1/$comando.1.gz"
+	if ! test -e "/usr/share/man/man1/FILE.1.gz"
 	then
-		echo "$comando no tiene entrada de manual de mandato 1"
+		echo "El fichero $FILE no se encuentra en /bin"
 	fi
 done
 
